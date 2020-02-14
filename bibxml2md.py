@@ -79,14 +79,14 @@ def parseXML(infile):
             if month or year:
                 reference["date"] = ydate
     
-        seriesInfoList = item.findall("seriesInfo")
-        if seriesInfoList != []:
-            yseriesInfo = {}
-            for si in seriesInfoList:
+        seriesinfoList = item.findall("seriesInfo")
+        if seriesinfoList != []:
+            yseriesinfo = {}
+            for si in seriesinfoList:
                 name = si.get("name")
                 value = si.get("value")
-                yseriesInfo[name] = value
-            reference["seriesInfo"] = yseriesInfo
+                yseriesinfo[name] = value
+            reference["seriesinfo"] = yseriesinfo
 
         references[anchor] = reference
 
@@ -100,8 +100,9 @@ def main():
     outfile = sys.argv[2]
 
     refs = parseXML(infile)
+    references = {"references": refs} # Add a top level (this makes it easier to cut and paste)
     out = open(outfile, "w")
-    out.write(yaml.dump(refs, width = float("inf"))) # work around pyyaml line break behavior
+    out.write(yaml.dump(references, width = float("inf"))) # work around pyyaml line break behavior
 
 if __name__ == "__main__":
     main()
