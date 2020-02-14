@@ -78,6 +78,8 @@ def parseXML(infile):
                 ydate = year
             if month or year:
                 reference["date"] = ydate
+            else:
+                reference["date"] = False # An empty "date" element, this keeps xml2rfc happy
     
         seriesinfoList = item.findall("seriesInfo")
         if seriesinfoList != []:
